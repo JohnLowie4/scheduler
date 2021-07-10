@@ -69,7 +69,37 @@ function getInterview(state, interview) {
   };
 };
 
+
+function getInterviewersForDay(state, day) {
+  const result = [];
+
+  /**
+   * Given the day, searches for appointment info for
+   * that day
+   * @returns an array of appointment id's
+   */
+   function getInterviewersID() {
+    const days = state.days;
+    for (const obj of days) {
+      if (obj.name === day) {
+        return obj.interviewers;
+      }
+    }
+    return [];
+  }
+
+  const interviewersID = getInterviewersID();
+  const interviewers = state.interviewers;
+
+  for (const id of interviewersID) {
+    result.push(interviewers[id]);
+  }
+
+  return result;
+};
+
 module.exports = {
   getAppointmentsForDay,
-  getInterview
+  getInterview,
+  getInterviewersForDay
 };
