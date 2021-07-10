@@ -37,4 +37,39 @@ function getAppointmentsForDay(state, day) {
   return result;
 };
 
-module.exports = {getAppointmentsForDay};
+/**
+ * Finds the student and the interviewer for a specific time slot
+ * @param {Object} state 
+ * @param {Object} interview 
+ * @returns {Object} with student name and interviewer information
+ */
+function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  }
+
+  const student = interview.student
+
+  /**
+   * Finds the interviewer for a specific student
+   * @returns {Object} of interviewer information
+   */
+  const interviewer = function() {
+    for (const obj in state.interviewers) {
+      if (interview.interviewer === state.interviewers[obj].id) {
+        return state.interviewers[obj];
+      }
+    }
+    return null;
+  };
+
+  return {
+    "student": student,
+    "interviewer": interviewer()
+  };
+};
+
+module.exports = {
+  getAppointmentsForDay,
+  getInterview
+};
