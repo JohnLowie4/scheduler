@@ -9,11 +9,11 @@ export default function useVisualMode(initial) {
       const newHistory = [...history];
       newHistory.pop();
       setMode(newMode);
-      setHistory((prevHistory) => [...newHistory, newMode]);
+      setHistory((prev) => [...newHistory, newMode]);
     } 
     if (!replace) {
       setMode(newMode);
-      setHistory((prevHistory) => [...prevHistory, newMode]);
+      setHistory((prev) => [...prev, newMode]);
     }
   }
 
@@ -21,7 +21,7 @@ export default function useVisualMode(initial) {
     if (history.length > 1) {
       history.pop();
       setMode(history[history.length - 1]);
-      setHistory(history);
+      setHistory(prev => [...prev]);
     }
   }
 

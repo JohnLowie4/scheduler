@@ -8,13 +8,29 @@ import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
-  
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+    // setState({...state, appointments});
+    Promise.resolve(axios.put(`/api/appointments/${id}`, {...appointment}))
+    .then((res) => {
+      setState({...state, appointments})});
+  }
 
   const setDay = day => setState({ ...state, day });
 
@@ -43,6 +59,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   })
