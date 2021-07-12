@@ -3,14 +3,6 @@ import axios from "axios";
 
 export default function useApplicationData() {
 
-  const dayID = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4
-  }
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -42,22 +34,17 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    
-    const dayOfWeek = dayID[state.day];
-    const spotsCount = state.days[dayOfWeek].spots + 1;
-    const newDay = {
-      ...state.days[dayOfWeek],
-      spots: spotsCount
-    }
 
-    const days = [
-      ...state.days,
-      state.days[dayOfWeek] = newDay
-    ];
-
-    return axios.put(`/api/appointments/${id}`, {...appointment})
+    return axios.put(`/api/appointments/${id}`, {interview})
       .then((res) => {
         setState({...state, appointments});
+        axios.get("/api/days")
+          .then((res) => {
+            setState((prev) => ({
+              ...prev,
+              days: res.data
+            }));
+          });
       });
   }
 
@@ -76,6 +63,13 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`)
       .then((res) => {
         setState({...state, appointments});
+        axios.get("/api/days")
+          .then((res) => {
+            setState((prev) => ({
+              ...prev,
+              days: res.data
+            }));
+          });
       });
   }
 
