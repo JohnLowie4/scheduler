@@ -24,6 +24,7 @@ export default function Form(props) {
       return;
     }
 
+    setError("");
     props.onSave(name, interviewer);
   };
 
@@ -34,7 +35,10 @@ export default function Form(props) {
           <input
             className="appointment__create-input text--semi-bold"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+              setError("");
+            }}
             name="name"
             type="text"
             placeholder="Enter Student Name"
