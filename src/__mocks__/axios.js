@@ -79,7 +79,8 @@ export default {
     }
   }),
   put: jest.fn(url => {
-    if (url === `/api/appointments/${fixtures.appointments["1"].id}`) {
+    if (url === `/api/appointments/${fixtures.appointments["1"].id}`
+        || url === `/api/appointments/${fixtures.appointments["2"].id}`) {
       return Promise.resolve({
         state: 204,
         statusText: "No Content"
