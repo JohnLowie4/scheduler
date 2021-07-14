@@ -23,6 +23,15 @@ export default function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
+  function findDayIndex() {
+    for (let i = 0; i < state.days.length; i++) {
+      if (state.days[i].name === state.day) {
+        return i;
+      }
+    }
+    return;
+  }
+
   function bookInterview(id, interview) {
   
     const appointment = {
@@ -35,16 +44,13 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const days = [...state.days];
+    const dayIndex = findDayIndex();
+    days[dayIndex].spots -= 1;
+
     return axios.put(`/api/appointments/${id}`, {interview})
       .then((res) => {
-        setState({...state, appointments});
-        axios.get("/api/days")
-          .then((res) => {
-            setState((prev) => ({
-              ...prev,
-              days: res.data
-            }));
-          });
+        setState({...state, appointments, days});
       });
   }
 
@@ -60,16 +66,13 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const days = [...state.days];
+    const dayIndex = findDayIndex();
+    days[dayIndex].spots += 1;
+
     return axios.delete(`/api/appointments/${id}`)
       .then((res) => {
-        setState({...state, appointments});
-        axios.get("/api/days")
-          .then((res) => {
-            setState((prev) => ({
-              ...prev,
-              days: res.data
-            }));
-          });
+        setState({...state, appointments, days});
       });
   }
 
