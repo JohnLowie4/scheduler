@@ -32,16 +32,6 @@ export default function useApplicationData() {
     return;
   }
 
-  function countNullInterview(dayObj, appointments) {
-    let count = 0;
-    for (const id of dayObj.appointments) {
-      if (!appointments[id].interview) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
   function bookInterview(id, interview) {
   
     const appointment = {
@@ -56,17 +46,18 @@ export default function useApplicationData() {
 
     const days = [...state.days];
     const dayIndex = findDayIndex();
-    const numOfNullInterview = countNullInterview(days[dayIndex], appointments);
-    days[dayIndex].spots = numOfNullInterview;
-
+    
     return axios.put(`/api/appointments/${id}`, {interview})
       .then((res) => {
+        if (state.appointments[id].interview === null) {
+          days[dayIndex] = {...days[dayIndex], spots: days[dayIndex].spots - 1};
+        }
         setState({...state, appointments, days});
       });
   }
 
   function cancelInterview(id) {
-    
+    console.log(state.days[0].spots);
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -79,10 +70,10 @@ export default function useApplicationData() {
 
     const days = [...state.days];
     const dayIndex = findDayIndex();
-    days[dayIndex].spots += 1;
 
     return axios.delete(`/api/appointments/${id}`)
       .then((res) => {
+        days[dayIndex] = { ...days[dayIndex], spots: days[dayIndex].spots + 1 };
         setState({...state, appointments, days});
       });
   }
