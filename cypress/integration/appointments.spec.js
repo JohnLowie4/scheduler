@@ -1,4 +1,6 @@
 describe("should book an interview", () => {
+
+  // Refresh each test 
   beforeEach(() => {
     cy.request("GET", "/api/debug/reset");
   
@@ -7,6 +9,7 @@ describe("should book an interview", () => {
     cy.contains("Monday");
   });
 
+  // Create interview appointment
   it("should visit root", () => {
     cy.get("[alt=Add]")
       .first()

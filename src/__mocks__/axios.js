@@ -1,3 +1,4 @@
+// Mock data for testing
 const fixtures = {
   days: [
     {
@@ -53,6 +54,7 @@ const fixtures = {
   }
 };
 
+// Mock axios requests
 export default {
   defaults: { baseURL: "" },
   get: jest.fn(url => {

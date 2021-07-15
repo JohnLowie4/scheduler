@@ -3,6 +3,8 @@ import InterviewerListItem from "components/InterviewerListItem";
 import PropTypes from "prop-types";
 
 export default function InterviewerList(props) {
+
+  // Maps through each interviewer for display
   const interviewers = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem

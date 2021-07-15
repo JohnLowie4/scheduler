@@ -9,6 +9,7 @@ export default function DayListItem(props) {
     "day-list__item--full": props.spots === 0
   });
 
+  // Formats string to display correct English syntax
   const formatSpots = function () {
     if (!props.spots) {
       return "no spots remaining";

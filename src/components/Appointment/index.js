@@ -22,10 +22,17 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
+  // Custom hooks
   const { mode, transition, back } = useVisualMode(
+    // Initializes time slots of each appointment
     props.interview? SHOW : EMPTY
   );
-    
+  
+  /**
+   * Saves new or updated appointment
+   * @param {String} name 
+   * @param {Number} interviewer Selected interviewer number
+   */
   function save(name, interviewer) {
     transition(SAVING);
     const interview = {

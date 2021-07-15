@@ -69,7 +69,12 @@ function getInterview(state, interview) {
   };
 };
 
-
+/**
+ * Given the current day, returns an array of available interviewers for that specific day
+ * @param {Object} state 
+ * @param {String} day current day 
+ * @returns {Array} an array of interviewers information for the day
+ */
 function getInterviewersForDay(state, day) {
   const result = [];
 

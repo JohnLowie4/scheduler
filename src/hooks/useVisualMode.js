@@ -4,6 +4,7 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
+  // Transitions to new visual state/deletes previous visual state
   function transition(newMode, replace = false) {
     if (replace) {
       const newHistory = [...history];
@@ -17,6 +18,7 @@ export default function useVisualMode(initial) {
     }
   }
 
+  // Goes back to previous visual state
   function back() {
     if (history.length > 1) {
       history.pop();
