@@ -8,7 +8,6 @@ export default function useVisualMode(initial) {
   function transition(newMode, replace = false) {
     if (replace) {
       const newHistory = [...history];
-      newHistory.pop();
       setMode(newMode);
       setHistory((prev) => [...newHistory, newMode]);
     } 
@@ -21,9 +20,10 @@ export default function useVisualMode(initial) {
   // Goes back to previous visual state
   function back() {
     if (history.length > 1) {
-      history.pop();
-      setMode(history[history.length - 1]);
-      setHistory(history);
+      const newHistory = [...history]
+      newHistory.pop();
+      setMode(newHistory[newHistory.length - 1]);
+      setHistory(newHistory);
     }
   }
 
